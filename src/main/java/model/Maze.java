@@ -5,11 +5,11 @@ import java.util.Arrays;
 public class Maze {
     private final int height;
     private final int width;
-    private Cell[][] map;
-    private UniqueCell start;
-    private UniqueCell finish;
+    private TypeCell[][] map;
+    private Cell start;
+    private Cell finish;
 
-    enum Cell {
+    enum TypeCell {
         SPACE(0),
         WALL(1),
         START(2),
@@ -18,7 +18,7 @@ public class Maze {
 
         private final int code;
 
-        Cell(int code) {
+        TypeCell(int code) {
             this.code = code;
         }
 
@@ -26,10 +26,14 @@ public class Maze {
         public String toString() {
             return String.valueOf(code);
         }
+
+        public int getCode() {
+            return code;
+        }
     }
 
-    private Cell getCellByCode(int code) throws IllegalArgumentException {
-        for (Cell cell: Cell.values()) {
+    public static TypeCell getCellByCode(int code) throws IllegalArgumentException {
+        for (TypeCell cell: TypeCell.values()) {
             if (cell.code == code) {
                 return cell;
             }
@@ -41,12 +45,26 @@ public class Maze {
     public Maze(int height, int width) {
         this.height = height;
         this.width = width;
-        this.map = new Cell[height][width];
+        this.map = new TypeCell[height][width];
+    }
+
+    public Maze(int height, int width, TypeCell[][] map) {
+        this.height = height;
+        this.width = width;
+        this.map = map;
+    }
+
+    public Maze(int height, int width, TypeCell[][] map, Cell start, Cell finish) {
+        this.height = height;
+        this.width = width;
+        this.map = map;
+        this.start = start;
+        this.finish = finish;
     }
 
     /**
      * Загрузка лабиринта через массив <code>int</code>
-     * @param array матрица лабиринта (0 - пустота, 1 - стена, 3 - старт, 4 - финиш)
+     * @param array матрица лабиринта (0 - пустота, 1 - стена, 2 - старт, 3 - финиш)
      * @throws IllegalArgumentException при неверном размере массива
      */
     public void loadMazeByIntArray(int[][] array) throws IllegalArgumentException{
@@ -55,14 +73,26 @@ public class Maze {
         if (arrHeight != height || arrWidth != width) {
             throw new IllegalArgumentException("ARRAY SIZE DOES NOT EQUALS MAZE SIZE");
         }
+        boolean startWasFound = false;
+        boolean finishWasFound = false;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 map[y][x] = getCellByCode(array[y][x]);
-                if (array[y][x] == Cell.START.code) {
-                    start = new UniqueCell(x, y);
+                if (array[y][x] == TypeCell.START.code) {
+                    if (!startWasFound) {
+                        start = new Cell(x, y);
+                        startWasFound = true;
+                    } else {
+                        throw new IllegalArgumentException("MORE THAN 1 START CELL");
+                    }
                 }
-                if (array[y][x] == Cell.FINISH.code) {
-                    finish = new UniqueCell(x, y);
+                if (array[y][x] == TypeCell.FINISH.code) {
+                    if (!finishWasFound) {
+                        finish = new Cell(x, y);
+                        finishWasFound = true;
+                    } else {
+                        throw new IllegalArgumentException("MORE THAN 1 FINISH CELL");
+                    }
                 }
             }
         }
@@ -90,28 +120,43 @@ public class Maze {
         return width;
     }
 
-    public Cell[][] getMap() {
+    public TypeCell[][] getMap() {
         return map;
     }
 
-    public UniqueCell getStart() {
+    public void setCell(int x, int y, TypeCell cell) {
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            throw new IllegalArgumentException("WRONG CORDS");
+        }
+        map[y][x] = cell;
+    }
+
+    public Cell getStart() {
         return start;
     }
 
-    public UniqueCell getFinish() {
+    public Cell getFinish() {
         return finish;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\n");
         for (int y = 0; y < height; y++) {
             sb.append(Arrays.toString(map[y])).append("\n");
         }
         return "Maze{" +
                 "height=" + height +
                 ", width=" + width +
-                ",\n" + sb +
+                ",\n" +
+                "start=" + start +
+                ", finish=" + finish +
+                sb +
                 '}';
     }
+
+    public Maze cloneMaze() {
+        return new Maze(height, width, map, start, finish);
+    }
+
 }

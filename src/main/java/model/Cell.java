@@ -2,20 +2,32 @@ package model;
 
 import java.util.Objects;
 
-public class UniqueCell {
+public class Cell {
     private final int x;
     private final int y;
 
-    UniqueCell(int x, int y) {
+    Cell(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int x() {
+        return x;
+    }
+
+    public int y() {
+        return y;
+    }
+
+    public Cell cloneCell() {
+        return new Cell(x, y);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UniqueCell that = (UniqueCell) o;
+        Cell that = (Cell) o;
         return x == that.x &&
                 y == that.y;
     }
@@ -30,6 +42,7 @@ public class UniqueCell {
         return "[x=" +
                 x +
                 ", y=" +
+                y +
                 "]";
     }
 }
