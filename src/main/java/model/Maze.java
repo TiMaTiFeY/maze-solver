@@ -9,7 +9,7 @@ public class Maze {
     private Cell start;
     private Cell finish;
 
-    enum TypeCell {
+    public enum TypeCell {
         SPACE(0),
         WALL(1),
         START(2),
@@ -124,6 +124,10 @@ public class Maze {
         return map;
     }
 
+    public TypeCell getType(Cell cell) {
+        return map[cell.y()][cell.x()];
+    }
+
     public void setCell(int x, int y, TypeCell cell) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException("WRONG CORDS");
@@ -137,6 +141,14 @@ public class Maze {
 
     public Cell getFinish() {
         return finish;
+    }
+
+    public void setStart(Cell start) {
+        this.start = start;
+    }
+
+    public void setFinish(Cell finish) {
+        this.finish = finish;
     }
 
     @Override

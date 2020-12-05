@@ -1,24 +1,19 @@
-import model.Maze;
-import model.MazeReader;
-import model.MazeSolver;
-import model.MazeWriter;
+import model.*;
+import view.MazePainter;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        MazeGenerator generator = new MazeGenerator(0.45f, 4, 2, 1);
+        MazePainter painter = new MazePainter();
         MazeReader reader = new MazeReader();
-        Maze maze = reader.readMazeFromFile("src/main/resources/in.txt");
-        System.out.println(maze);
-        MazeSolver solver = new MazeSolver();
-        System.out.println(solver.solveByWave(maze));
-    }
-
-    public static void printArray(int[][] d) {
-        for (int i = 0; i < d.length; i++) {
-            System.out.println(Arrays.toString(d[i]));
-        }
+        BufferedImage img = painter.paintMaze(
+                new MazeSolver().solveByWave(
+                        generator.generateMaze(100,100)
+                )
+        );
     }
 }
 

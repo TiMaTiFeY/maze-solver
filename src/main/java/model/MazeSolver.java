@@ -5,8 +5,8 @@ import java.util.*;
 
 public class MazeSolver {
 
-    private List<Cell> getNearSpaces(Cell cell, Maze maze) {
-        List<Cell> result = new ArrayList<>();
+    private Set<Cell> getNearSpaces(Cell cell, Maze maze) {
+        Set<Cell> result = new HashSet<>();
         if (cell.x() > 0 && (maze.getMap()[cell.y()][cell.x() - 1].equals(Maze.TypeCell.SPACE)
                         || maze.getMap()[cell.y()][cell.x() - 1].equals(Maze.TypeCell.START)
                         || maze.getMap()[cell.y()][cell.x() - 1].equals(Maze.TypeCell.FINISH))) {
