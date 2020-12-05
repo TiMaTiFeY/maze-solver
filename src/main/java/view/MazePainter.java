@@ -2,8 +2,11 @@ package view;
 
 import model.Maze;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 public class MazePainter {
@@ -12,7 +15,7 @@ public class MazePainter {
             Map.entry(Maze.TypeCell.WALL, Color.BLACK),
             Map.entry(Maze.TypeCell.START, Color.GREEN),
             Map.entry(Maze.TypeCell.FINISH, Color.RED),
-            Map.entry(Maze.TypeCell.WAY, Color.BLUE)
+            Map.entry(Maze.TypeCell.WAY, Color.MAGENTA)
     );
 
     public BufferedImage paintMaze(Maze maze) {
@@ -23,5 +26,11 @@ public class MazePainter {
             }
         }
         return img;
+    }
+
+    public void saveMazeToImg(Maze maze, String outputFileName) throws IOException {
+        BufferedImage img = paintMaze(maze);
+        File outputFile = new File(outputFileName);
+        ImageIO.write(img, "png", outputFile);
     }
 }

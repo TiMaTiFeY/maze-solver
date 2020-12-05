@@ -144,10 +144,18 @@ public class Maze {
     }
 
     public void setStart(Cell start) {
+        if (this.start != null) {
+            map[this.start.y()][this.start.x()] = TypeCell.SPACE;
+        }
+        map[start.y()][start.x()] = TypeCell.START;
         this.start = start;
     }
 
     public void setFinish(Cell finish) {
+        if (this.finish != null) {
+            map[this.finish.y()][this.finish.x()] = TypeCell.SPACE;
+        }
+        map[finish.y()][finish.x()] = TypeCell.FINISH;
         this.finish = finish;
     }
 
