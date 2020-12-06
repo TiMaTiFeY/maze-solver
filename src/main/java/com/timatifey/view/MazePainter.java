@@ -1,6 +1,6 @@
-package view;
+package com.timatifey.view;
 
-import model.Maze;
+import com.timatifey.model.Maze;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,11 +18,31 @@ public class MazePainter {
             Map.entry(Maze.TypeCell.WAY, Color.MAGENTA)
     );
 
+    private static final int SIZE_PIXEL = 20;
+
     public BufferedImage paintMaze(Maze maze) {
-        BufferedImage img = new BufferedImage(maze.getWidth(), maze.getHeight(), BufferedImage.TYPE_INT_RGB);
+        double scale = 1;
+        if (maze.getWidth() * maze.getHeight() < 50) {
+            scale = 5;
+        } else if (maze.getWidth() * maze.getHeight() < 150) {
+            scale = 3;
+        }
+        final int size_pixel = (int) (scale * SIZE_PIXEL);
+        BufferedImage img = new BufferedImage(
+                maze.getWidth() * size_pixel,
+                maze.getHeight() * size_pixel,
+                BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < maze.getHeight(); y++) {
             for (int x = 0; x < maze.getWidth(); x++) {
-                img.setRGB(x, y, colors.get(maze.getMap()[y][x]).getRGB());
+                for (int pixelX = 0; pixelX < size_pixel; pixelX++) {
+                    for (int pixelY = 0; pixelY < size_pixel; pixelY++) {
+                        img.setRGB(
+                                x * size_pixel + pixelX,
+                                y * size_pixel + pixelY,
+                                colors.get(maze.getMap()[y][x]).getRGB()
+                        );
+                    }
+                }
             }
         }
         return img;

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.timatifey.controller.MainScene"
+            prefHeight="1920.0" prefWidth="1080.0"
+            stylesheets="styles.css">
+    <left>
+        <VBox spacing="50" alignment="TOP_LEFT">
+            <padding>
+                <Insets top="30" bottom="10" left="30" right="30"/>
+            </padding>
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <Label>Алгоритм генерации</Label>
+                <ComboBox fx:id="generateAlg"/>
+            </VBox>
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <Label>Алгоритм нахождения пути</Label>
+                <ComboBox fx:id="solveAlg"/>
+            </VBox>
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <HBox spacing="10" alignment="BASELINE_RIGHT">
+                    <Label>Высота:</Label>
+                    <TextField fx:id="heightField" prefHeight="31.0" prefWidth="91.0" promptText="50"/>
+                </HBox>
+                <HBox spacing="10" alignment="BASELINE_RIGHT">
+                    <Label>Ширина:</Label>
+                    <TextField fx:id="widthField" prefHeight="31.0" prefWidth="91.0" promptText="50"/>
+                </HBox>
+            </VBox>
+            <VBox spacing="10" alignment="CENTER_LEFT">
+                <Button
+                        fx:id="generateButton"
+                        text="Сгенерировать лабиринт"
+                        onAction="#generateMaze"
+                />
+                <Button
+                        fx:id="solveButton"
+                        text="Найти решение лабиринта"
+                        onAction="#solveMaze"
+                />
+            </VBox>
+            <VBox spacing="15" alignment="CENTER_LEFT">
+                <Button
+                        fx:id="openFileButton"
+                        text="Открыть файл с лабиринтом"
+                        onAction="#openFile"
+                />
+                <VBox spacing="20" alignment="CENTER_LEFT">
+                    <VBox spacing="10" alignment="CENTER_LEFT">
+                        <Label>Имя выходного файла</Label>
+                        <TextField fx:id="nameOutputFile" prefHeight="31.0" prefWidth="91.0" promptText="maze.txt"/>
+                    </VBox>
+                    <Button
+                            fx:id="writeFileButton"
+                            text="Записать лабиринт в файл txt"
+                            onAction="#writeFile"
+                    />
+                    <Button
+                            fx:id="writeImgButton"
+                            text="Сохранить изображение"
+                            onAction="#writeImage"
+                    />
+                </VBox>
+                <Label fx:id="error"></Label>
+            </VBox>
+        </VBox>
+    </left>
+    <center>
+        <ImageView fx:id="imageView">
+        </ImageView>
+    </center>
+</BorderPane>
+

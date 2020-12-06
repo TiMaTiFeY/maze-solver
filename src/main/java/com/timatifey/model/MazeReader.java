@@ -1,4 +1,4 @@
-package model;
+package com.timatifey.model;
 
 import java.io.*;
 

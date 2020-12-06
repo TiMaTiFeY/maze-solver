@@ -1,4 +1,4 @@
-package model;
+package com.timatifey.model;
 
 import java.util.*;
 
@@ -39,7 +39,7 @@ public class MazeGenerator {
             maze = doSimulationStep(maze, deathLimit, birthLimit);
         }
         maze.setStart(new Cell(0,0));
-        maze.setFinish(new Cell(height - 5,width - 5));
+        maze.setFinish(new Cell(width - 1, height - 1));
         return maze;
     }
 
@@ -99,6 +99,9 @@ public class MazeGenerator {
      * @return сгенерированный лабиринт
      */
     public Maze generateMazeByBacktracking(int height, int width) {
+        if (height < 5 || width < 5) {
+            throw new IllegalArgumentException("MIN SIZE: 3");
+        }
         Maze maze = new Maze(height, width);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -111,9 +114,9 @@ public class MazeGenerator {
         }
         visitedCells = new boolean[height][width];
         countVisited = 0;
-
-        Cell currentCell = new Cell(width - 3, height - 3);
-        visitedCells[width - 3][height - 3] = true;
+        Cell startCell = new Cell(width - 3, height - 3);
+        Cell currentCell = startCell;
+        visitedCells[startCell.y()][startCell.x()] = true;
         Cell neighbourCell;
         Stack<Cell> stack = new Stack<>();
         int cellNumber = height * width - (height + width - 2) * 2;

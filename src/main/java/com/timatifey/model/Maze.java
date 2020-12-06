@@ -1,4 +1,4 @@
-package model;
+package com.timatifey.model;
 
 import java.util.Arrays;
 
@@ -132,7 +132,7 @@ public class Maze {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw new IllegalArgumentException("WRONG CORDS");
         }
-        map[y][x] = cell;
+        this.map[y][x] = cell;
     }
 
     public Cell getStart() {
@@ -176,7 +176,10 @@ public class Maze {
     }
 
     public Maze cloneMaze() {
-        return new Maze(height, width, map, start, finish);
+        TypeCell[][] newMap = new TypeCell[height][width];
+        for (int y = 0; y < height; y++)
+            System.arraycopy(map[y], 0, newMap[y], 0, width);
+        return new Maze(height, width, newMap, start.cloneCell(), finish.cloneCell());
     }
 
 }

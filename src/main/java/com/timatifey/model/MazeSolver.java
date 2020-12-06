@@ -1,4 +1,4 @@
-package model;
+package com.timatifey.model;
 
 import java.lang.module.FindException;
 import java.util.*;
@@ -30,6 +30,11 @@ public class MazeSolver {
         return result;
     }
 
+    /**
+     * Решение лабиринта волновым алгоритмом (алгоритмом Ли)
+     * @param maze решаемый лабиринт
+     * @return решенный лабиринт
+     */
     public Maze solveByWave(Maze maze) {
         //Алгоритм Ли
         Maze m = maze.cloneMaze();
@@ -43,7 +48,7 @@ public class MazeSolver {
             if (curr == null) {
                 throw new FindException("MAZE HAS NO SOLUTIONS");
             }
-            for (Cell cell : getNearSpaces(curr, maze)) {
+            for (Cell cell : getNearSpaces(curr, m)) {
                 if (d[cell.y()][cell.x()] == 0) {
                     d[cell.y()][cell.x()] = markNumber;
                     queue.add(cell);
@@ -53,7 +58,7 @@ public class MazeSolver {
         }
         Cell curr = m.getFinish().cloneCell();
         while (!curr.equals(m.getStart())) {
-            for (Cell cell : getNearSpaces(curr, maze)) {
+            for (Cell cell : getNearSpaces(curr, m)) {
                 if (d[cell.y()][cell.x()] == markNumber - 1) {
                     m.setCell(cell.x(), cell.y(), Maze.TypeCell.WAY);
                     curr = cell;
@@ -66,13 +71,7 @@ public class MazeSolver {
         return m;
     }
 
-    public void solveByRiverFormation(Maze maze) {
-        //https://habr.com/ru/post/162915/
-        //TODO
-    }
-
-    public void solveByAntColony(Maze maze) {
-        //https://habr.com/ru/post/162915/
+    public void solveByAntColony(Maze maze) throws Exception {
         //TODO
     }
 

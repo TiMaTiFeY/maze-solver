@@ -1,0 +1,47 @@
+Button, ComboBox {
+    -fx-background-color: #5E5E5E;
+    -fx-text-fill: #FCFAF9;
+    -fx-font-family: "Roboto Thin";
+    -fx-font-size: 25px;
+    -fx-min-width: 500px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
+
+ComboBox {
+    -fx-text-inner-color: #FCFAF9;
+    -fx-color-label-visible: #FCFAF9;
+    -fx-text-fill: #FCFAF9;
+    -fx-highlight-text-fill: #FCFAF9;
+}
+
+Button:hover, ComboBox:hover {
+    -fx-background-color: #48E5C2;
+}
+
+Label {
+    -fx-text-fill: #FCFAF9;
+    -fx-font-family: "Roboto Thin";
+    -fx-font-size: 25px;
+}
+
+#error {
+    -fx-text-alignment: center;
+    -fx-font-family: "Roboto Thin";
+    -fx-text-fill: red;
+    -fx-font-size: 40px;
+}
+
+VBox, ImageView, Image, BorderPane {
+    -fx-background-color: #333333;
+}
+
+TextField {
+    -fx-start-margin: 10px;
+    -fx-text-fill: #333333;
+    -fx-font-family: "Roboto Thin";
+    -fx-font-size: 25px;
+    -fx-min-width: 380px;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+}
